@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
 public class CustomItemView extends FrameLayout implements Checkable {
 
@@ -27,6 +28,7 @@ public class CustomItemView extends FrameLayout implements Checkable {
 	}
 	
 	private void initialize() {
+		// レイアウトを追加する
 		addView(inflate(getContext(), R.layout.custom_item_view, null));
 		mRadioButton = (RadioButton) findViewById(R.id.radio_button);
 	}
@@ -38,8 +40,11 @@ public class CustomItemView extends FrameLayout implements Checkable {
 
 	@Override
 	public void setChecked(boolean checked) {
+		// RadioButton の表示を切り替える
 		mRadioButton.setChecked(checked);
-		setBackgroundColor(checked ? Color.LTGRAY : Color.TRANSPARENT);
+		TextView textView = (TextView) findViewById(R.id.text_view1);
+		textView.setTextColor(checked ? Color.WHITE : Color.BLACK);
+		setBackgroundColor(checked ? Color.DKGRAY : Color.TRANSPARENT);
 	}
 
 	@Override

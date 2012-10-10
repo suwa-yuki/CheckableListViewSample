@@ -8,17 +8,34 @@ import android.os.Bundle;
 import android.widget.AbsListView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 
 public class MainActivity extends Activity {
 
-	private ListView mListView;
-	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		mListView = new ListView(getApplicationContext());
-		setContentView(mListView);
+		SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(),
+				getItemList(), R.layout.list_view_item,
+				new String[] { "title" }, new int[] { R.id.text_view1 });
+		
+		// ListView の場合
+		ListView listView = new ListView(getApplicationContext());
+		setContentView(listView);
+		listView.setAdapter(adapter);
+		// 単一選択モードにする
+		listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE);
+		// デフォルト値をセットする
+		listView.setItemChecked(0, true);
+		
+		// Spinner の場合
+//		setContentView(R.layout.layout_main);
+//		Spinner spinner = (Spinner) findViewById(R.id.spinner);
+//		spinner.setAdapter(adapter);
+	}
+	
+	private ArrayList<HashMap<String, String>> getItemList() {
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String, String>>();
 		HashMap<String, String> item1 = new HashMap<String, String>();
 		item1.put("title", "リュウレンジャー");
@@ -38,12 +55,6 @@ public class MainActivity extends Activity {
 		HashMap<String, String> item6 = new HashMap<String, String>();
 		item6.put("title", "キバレンジャー");
 		list.add(item6);
-
-		SimpleAdapter adapter = new SimpleAdapter(getApplicationContext(),
-				list, R.layout.custom_item, new String[] { "title" },
-				new int[] { R.id.text_view1 });
-		mListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-		mListView.setAdapter(adapter);
-		mListView.setItemChecked(0, true);
+		return list;
 	}
 }
